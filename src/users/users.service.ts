@@ -37,7 +37,7 @@ export class UsersService {
   async findOneByEmail(email: string) {
     const user = await this.userModel
       .findOne({ email: email })
-      .select("+password");
+      .select("+password +otpCode +validateOtpCodeDate");
     return user;
   }
 

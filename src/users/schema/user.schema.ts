@@ -15,6 +15,15 @@ export class User {
   @Prop({ type: String, select: false })
   password: string;
 
+  @Prop({ type: String, select: false })
+  otpCode: string;
+
+  @Prop({ type: Date, select: false })
+  validateOtpCodeDate: Date;
+
+  @Prop({ type: Boolean, default: false })
+  isVerified: boolean;
+
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "Image", default: [] })
   images: mongoose.Schema.Types.ObjectId[];
 }
