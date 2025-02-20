@@ -1,99 +1,287 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <a href="https://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Image Processing App
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A NestJS-based application for user authentication, file uploads to AWS S3, and advanced image transformations (resize, crop, rotate, flip, mirror, filters, compression, and watermarking).
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Table of Contents
 
-## Project setup
+- [Live Demo](#live-demo)
+- [Features](#features)
+- [Endpoints](#endpoints)
+- [Installation](#installation)
+- [Running the App](#running-the-app)
+- [Environment Variables](#environment-variables)
+- [Image Transformations](#image-transformations)
+- [Author](#author)
+
+---
+
+## Live Demo
+
+You can access the live version of this application here:
+**[https://image-processing-app-v6ju.onrender.com/](https://image-processing-app-v6ju.onrender.com/)**
+
+---
+
+## Features
+
+1. **User Management & Authentication**
+
+   - Sign up, sign in, verify email, reset password, resend verification email.
+   - Secure password handling with validation and error handling.
+
+2. **AWS S3 File Operations**
+
+   - Single and multiple file uploads (`upload-image`, `upload-many`).
+   - Single and multiple file retrieval (`get-image`, `get-many`).
+   - Single and multiple file deletions (`delete-image`, `delete-many`).
+
+3. **Image Transformations**
+
+   - Resize, crop, rotate, flip, mirror.
+   - Format conversion (e.g., PNG, JPEG, WebP).
+   - Apply filters (grayscale, sepia, etc.).
+   - Compress images with adjustable quality.
+   - Watermarking (position, size).
+
+4. **Access Control & Error Handling**
+   - Proper validations for invalid requests or unauthorized operations.
+   - Batch operations for file retrieval and deletion.
+   - Optimized logic to ensure efficiency and maintainability.
+
+---
+
+## Endpoints
+
+Below is a brief overview of the key endpoints (all requests should be prefixed by the base URL: `https://image-processing-app-v6ju.onrender.com`):
+
+### Auth & Users
+
+- **`[POST] /sign-up`**  
+  Create a new user.
+
+- **`[POST] /verify-email`**  
+  Verify user email via token.
+
+- **`[POST] /request-reset-password`**  
+  Request a password reset link.
+
+- **`[POST] /resend-verify-email`**  
+  Resend the email verification link.
+
+- **`[POST] /reset-password`**  
+  Reset password.
+
+- **`[POST] /sign-in`**  
+  Sign in with email and password.
+
+- **`[GET] /current-user`**  
+  Get the currently logged-in user (requires authentication).
+
+### File Operations
+
+- **`[POST] /upload-image`**  
+  Upload a single file to AWS S3.
+
+- **`[POST] /upload-many`**  
+  Upload multiple files to AWS S3.
+
+- **`[POST] /delete-image`**  
+  Delete a single file from AWS S3.
+
+- **`[POST] /delete-many`**  
+  Delete multiple files from AWS S3.
+
+- **`[POST] /get-image`**  
+  Retrieve a single file from AWS S3 (returns a base64 string).
+
+- **`[POST] /get-many`**  
+  Retrieve multiple files from AWS S3 (returns an array of base64 strings).
+
+### Image Transformations
+
+- **`[POST] /:id/transform`**  
+  Apply image transformations (resize, crop, rotate, flip, mirror, filters, compress, watermark, etc.) to an already uploaded image identified by `:id`.
+
+---
+
+## Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/mariamkhutuashvili/image-processing-app.git
+   cd image-processing-app
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+---
+
+## Running the App
+
+### Development
 
 ```bash
-$ npm install
+npm run start
 ```
 
-## Compile and run the project
+### Watch Mode
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:dev
 ```
 
-## Run tests
+### Production
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:prod
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Environment Variables
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Create a `.env` file at the root of the project (or use your preferred method for environment variables). The following variables are typically required:
 
-```bash
-$ npm install -g mau
-$ mau deploy
+```ini
+AWS_ACCESS_KEY=YOUR_AWS_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_ACCESS_KEY
+AWS_REGION=YOUR_AWS_REGION
+AWS_BUCKET_NAME=YOUR_AWS_S3_BUCKET_NAME
+
+# Example
+# AWS_ACCESS_KEY=AKIA...
+# AWS_SECRET_ACCESS_KEY=123abc...
+# AWS_REGION=us-east-1
+# AWS_BUCKET_NAME=image-processing-bucket
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## Image Transformations
 
-Check out a few resources that may come in handy when working with NestJS:
+You can apply various transformations by sending a POST request to `/:id/transform` with a JSON body containing a transformations object. Below are some examples:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Resize
 
-## Support
+```json
+{
+  "transformations": {
+    "resize": {
+      "width": 500,
+      "height": 300
+    }
+  }
+}
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Crop
 
-## Stay in touch
+```json
+{
+  "transformations": {
+    "crop": {
+      "width": 200,
+      "height": 200,
+      "x": 50,
+      "y": 50
+    }
+  }
+}
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Rotate
 
-## License
+```json
+{
+  "transformations": {
+    "rotate": 90
+  }
+}
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Format Conversion
+
+```json
+{
+  "transformations": {
+    "format": "png"
+  }
+}
+```
+
+### Filters
+
+```json
+{
+  "transformations": {
+    "filter": {
+      "grayscale": true,
+      "sepia": false
+    }
+  }
+}
+```
+
+### Flip
+
+```json
+{
+  "transformations": {
+    "flip": true
+  }
+}
+```
+
+### Mirror
+
+```json
+{
+  "transformations": {
+    "mirror": true
+  }
+}
+```
+
+### Compression
+
+```json
+{
+  "transformations": {
+    "compress": 80
+  }
+}
+```
+
+### Watermark
+
+```json
+{
+  "transformations": {
+    "watermark": {
+      "watermarkPath": "C:/path/to/watermark.png",
+      "position": "center",
+      "watermarkWidth": 150,
+      "watermarkHeight": 200
+    }
+  }
+}
+```
+
+**Note:** Watermark paths may vary by environment and file system. Ensure the path is accessible by the server.
+
+---
+
+## Author
+
+- [Mariam Khutuashvili](https://github.com/mariamkhutuashvili)
+- [Luka Gobechia](https://github.com/lukagobechia)
