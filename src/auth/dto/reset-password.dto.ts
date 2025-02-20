@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString, Matches } from "class-validator";
 
-const passwordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-
+const passwordRegEx =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
 
 export class ResetPasswordDto {
   @IsString()

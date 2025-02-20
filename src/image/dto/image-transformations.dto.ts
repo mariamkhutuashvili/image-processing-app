@@ -6,7 +6,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
-} from 'class-validator';
+} from "class-validator";
 
 class ResizeDto {
   @IsNumber()
@@ -46,14 +46,19 @@ export class WatermarkDto {
   watermarkPath?: string;
 
   @IsNumber()
-  watermarkWidth:number;
+  watermarkWidth: number;
 
   @IsNumber()
-  watermartHeight:number;
+  watermarkHeight: number;
 
-  @IsEnum(['top-left', 'top-right', 'bottom-left', 'bottom-right', 'center'])
+  @IsEnum(["top-left", "top-right", "bottom-left", "bottom-right", "center"])
   @IsOptional()
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center'; 
+  position?:
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "center";
 
   @IsNumber()
   @IsOptional()
@@ -79,8 +84,8 @@ export class TransformationsDto {
 
   @IsString()
   @IsOptional()
-  @IsIn(['jpeg', 'png', 'webp'])
-  format?: 'jpeg' | 'png' | 'webp';
+  @IsIn(["jpeg", "png", "webp"])
+  format?: "jpeg" | "png" | "webp";
 
   @IsObject()
   @IsOptional()
@@ -88,11 +93,11 @@ export class TransformationsDto {
 
   @IsBoolean()
   @IsOptional()
-  flip?:boolean;
+  flip?: boolean;
 
   @IsBoolean()
   @IsOptional()
-  mirror?:boolean;
+  mirror?: boolean;
 
   @IsNumber()
   @IsOptional()

@@ -26,7 +26,7 @@ export class ImageController {
     @Req() req
   ) {
     const userId = req.user.userId;
-    return this.imageService.processImage(id, userId,transformImageRequestDto);
+    return this.imageService.processImage(id, userId, transformImageRequestDto);
   }
 
   @Post("upload-image")
@@ -41,7 +41,7 @@ export class ImageController {
   @UseGuards(AuthGuard)
   getImage(@Body("filePath") filePath: string, @Req() req) {
     const userId = req.user.userId;
-    return this.imageService.getFile(filePath,userId);
+    return this.imageService.getFile(filePath, userId);
   }
 
   @Post("delete-image")
@@ -63,12 +63,12 @@ export class ImageController {
   @UseGuards(AuthGuard)
   getMany(@Body("filePaths") filePaths: string[], @Req() req) {
     const userId = req.user.userId;
-    return this.imageService.getFiles(filePaths,userId);
+    return this.imageService.getFiles(filePaths, userId);
   }
 
   @Post("delete-many")
   @UseGuards(AuthGuard)
-  deleteMany(@Body("filePaths") filePaths: string[],@Req() req) {
+  deleteMany(@Body("filePaths") filePaths: string[], @Req() req) {
     const userId = req.user.userId;
     return this.imageService.deleteFiles(filePaths, userId);
   }

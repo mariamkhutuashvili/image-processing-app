@@ -198,7 +198,6 @@ export class AuthService {
     return { message: "Password reset successfully" };
   }
 
-  
   async getCurrentUser(id: string) {
     return await this.usersService.findOne(id);
   }
