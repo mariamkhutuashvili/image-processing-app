@@ -1,5 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
+} from "@nestjs/common";
+import { AppService } from "./app.service";
+import { FilesInterceptor, FileInterceptor } from "@nestjs/platform-express";
 
 @Controller()
 export class AppController {
