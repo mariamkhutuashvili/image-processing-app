@@ -9,6 +9,7 @@ import {
   Req,
   Query,
   Res,
+  UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { SignUpDto } from "./dto/sign-up.dto";
@@ -18,6 +19,7 @@ import { RequestResetPasswordDto } from "./dto/request-reset-password.dto";
 import { ResetPasswordDto } from "./dto/reset-password.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as jwt from "jsonwebtoken";
+import { AuthGuard } from "./auth.guard";
 @Controller()
 export class AuthController {
   constructor(
@@ -72,6 +74,11 @@ export class AuthController {
       return res.render("token-expired", { message });
     }
   }
+
   @Get("current-user")
-  getCurrentUser(@Req() req) {}
+  @UseGuards(AuthGuard)
+  getCurrentUser(@Req() req) {
+    const id = req.user.userId;
+    return this.authService.getCurrentUser(id);
+  }
 }

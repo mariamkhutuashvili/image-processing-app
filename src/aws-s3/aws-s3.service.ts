@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { Readable } from "stream";
+import { v4 as uuid } from "uuid";
 
 @Injectable()
 export class AwsS3Service {
@@ -23,26 +24,35 @@ export class AwsS3Service {
     });
   }
 
-  async uploadImage(filePath: string, file: Buffer) {
-    if (!filePath || !file)
-      throw new BadRequestException("Filepath and file is required");
+  async uploadImage(file: Express.Multer.File) {
+    if (!file) throw new BadRequestException("File is required");
     try {
+      const uniqueId = uuid();
+
+      const fileExtension = file.mimetype.split("/")[1];
+      const name = file.originalname.split(".")[0];
+
+      const filePath = `images/${uniqueId}-${name}.${fileExtension}`;
+
       const config = {
         Key: filePath,
         Bucket: this.bucketName,
-        Body: file,
+        Body: file.buffer,
       };
 
       const uploadCommand = new PutObjectCommand(config);
       await this.s3storage.send(uploadCommand);
-      return filePath;
+
+      return { config, uniqueId };
     } catch (e) {
-      throw new BadRequestException("Could not upload file");
+      console.log(e);
+      throw new BadRequestException("Error uploading image");
     }
   }
 
   async getImageByFileId(filePath: string) {
-    if (!filePath) throw new BadRequestException("FilePath is required");
+    if (!filePath) throw new BadRequestException("FilePath is required 5");
+
     const config = {
       Key: filePath,
       Bucket: this.bucketName,
@@ -61,7 +71,7 @@ export class AwsS3Service {
       const base64 = fileBuffer.toString("base64");
       const file = `data:${fileStream.ContentType};base64,${base64}`;
 
-      return file;
+      return { fileBuffer, file };
     }
   }
 
