@@ -103,14 +103,14 @@ export class ImageService {
         const {
           watermarkPath,
           watermarkWidth,
-          watermartHeight,
+          watermarkHeight,
           position,
           top,
           left,
         } = transforms.watermark;
 
         const watermark = sharp(watermarkPath)
-          .resize(watermarkWidth, watermartHeight)
+          .resize(watermarkWidth, watermarkHeight)
           .png();
 
         const positions = {
@@ -183,7 +183,7 @@ export class ImageService {
         { new: true }
       );
       if (!updatedUser)
-        throw new BadRequestException("Image cannot added to the user");
+        throw new BadRequestException("Image could not be added to the user");
 
       return image;
     } catch (error) {
@@ -199,7 +199,7 @@ export class ImageService {
       });
       if (!file) {
         throw new BadRequestException(
-          "File not found or you do not have access to this file"
+          "File not found or you do not have permission"
         );
       }
       return await this.awsS3Service.getImageByFileId(filePath);
