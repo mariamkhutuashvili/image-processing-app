@@ -24,8 +24,8 @@ export class User {
   @Prop({ type: Boolean, default: false })
   isVerified: boolean;
 
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "Image", default: [] })
-  images: mongoose.Schema.Types.ObjectId[];
+  @Prop({ type: [mongoose.Types.ObjectId], ref: "Image", default: [] })
+  images: mongoose.Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
